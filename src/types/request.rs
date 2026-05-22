@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::types::method;
 
+#[derive(Debug)]
 pub struct Request {
     pub version: String,
     pub path: String,
