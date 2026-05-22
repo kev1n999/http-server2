@@ -5,4 +5,5 @@ pub enum Method {
     Put,
     Patch,
     Delete, 
+    Invalid,
 }

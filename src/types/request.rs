@@ -8,5 +8,5 @@ pub struct Request {
     pub path: String,
     pub method: method::Method,
     pub headers: HashMap<String, String>,
-    pub body: Vec<u8>,
+    // pub body: Vec<u8>,
 }

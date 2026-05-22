@@ -1,23 +1,33 @@
 use crate::types::{
     response::Response,
     request::Request,
+    method::Method,
 };
 
-// pub struct Request {
-//     pub version: String,
-//     pub path: String,
-//     pub method: method::Method,
-//     pub headers: HashMap<String, String>,
-//     pub body: Vec<u8>,
-// }
+use std::collections::HashMap;
 
-pub fn parse_request(lines: Vec<String>) -> () {
+pub fn parse_request(lines: Vec<String>) -> Option<Request> {
+    let mut headers: HashMap<String, String> = HashMap::new();
     let mut iter = lines.into_iter();  
     let request_line = iter.next().unwrap();
     let mut req_line_parts = request_line.split_whitespace(); // [METHOD, PATH, VERSION]
-    let method = req_line_parts.next();
-    let path = req_line_parts.next();
-    let version = req_line_parts.next();
+    let method = req_line_parts.next().unwrap().to_string();
+    let path = req_line_parts.next().unwrap().to_string();
+    let version = req_line_parts.next().unwrap().to_string();
 
-    println!("Request Line:\nMETHOD: {:?}\nPATH: {:?}\nVERSION: {:?}", method, path, version);
+    for header_lines in iter {
+        match header_lines.split_once(':') {
+            Some((key, val)) => {
+                headers.insert(key.trim().to_string(), val.trim().to_string());
+            },
+            None => eprintln!("An error ocurred to parse the request header!"),
+        }
+    }
+
+    Some(Request {
+        version,
+        path,
+        method: Method::new(method),
+        headers,
+    })
 }

@@ -13,5 +13,6 @@ pub fn handle_connection(mut stream: TcpStream) {
         .take_while(|line| !line.is_empty())
         .collect();
 
-    parse_request(http_request);
+    let parsed = parse_request(http_request);
+    println!("{:#?}", parsed);
 }
