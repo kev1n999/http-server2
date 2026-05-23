@@ -1,9 +1,14 @@
+use crate::headers::request_parse::parse_request;
+use crate::types::{
+    response_type::Response,
+    status_code::StatusCode,
+    content_type::ContentType,
+};
+
 use std::{
     io::{BufReader, prelude::*},
     net::{TcpStream},
 };
-
-use crate::headers::request_parse::parse_request;
 
 pub fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);
@@ -14,5 +19,6 @@ pub fn handle_connection(mut stream: TcpStream) {
         .collect();
 
     let parsed = parse_request(http_request);
-    println!("{:#?}", parsed);
+    let response = Response::build_response(&StatusCode::Ok, ContentType::Text, "Hello world".as_bytes().to_vec());
+    stream.write_all(&Response::to_bytes(&response));
 }

@@ -1,4 +1,4 @@
-use crate::types::method::Method;
+use crate::types::method_type::Method;
 
 impl Method {
     pub fn new(method: String) -> Self {
