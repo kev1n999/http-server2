@@ -1,7 +1,6 @@
 use crate::server::routes::routes::routes;
 use crate::{headers::request_parse::parse_request};
 use crate::types::{
-    request_type::Request,
     method_type::Method,
 };
 
