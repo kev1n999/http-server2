@@ -1,5 +1,9 @@
-use crate::{headers::request_parse::parse_request, server::responses::json::test_json};
-use crate::server::responses::html::hello_world;
+use crate::server::routes::routes::routes;
+use crate::{headers::request_parse::parse_request};
+use crate::types::{
+    request_type::Request,
+    method_type::Method,
+};
 
 use std::{
     io::{BufReader, prelude::*},
@@ -10,14 +14,17 @@ use std::{
 // function to handle http connections and get the requests
 pub fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);
-    let http_request: Vec<_> = buf_reader
+    let http_request: Vec<String> = buf_reader
         .lines()
         .map(|result| result.unwrap())
         .take_while(|line| !line.is_empty())
         .collect();
 
-    let parsed = parse_request(http_request);
-    println!("New request: {:#?}", parsed);
-    // hello_world(&stream);
-    test_json(&stream);
+    if let Some(request) = parse_request(http_request) {
+        for route in routes() {
+            if request.method == Method::Get && request.path == "/".to_string() {
+                (route.handler)(&request, &stream);
+            }
+        }
+    }
 }

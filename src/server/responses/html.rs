@@ -7,6 +7,11 @@ use crate::types::{
 use std::net::TcpStream;
 
 pub fn hello_world(stream: &TcpStream) -> Result<(), std::io::Error> {
-    let response = Response::build_response(&StatusCode::Ok, ContentType::Html, "<h1>Hello World!</h1>");
+    let response = Response::build_response(
+        &StatusCode::Ok, 
+        ContentType::Html, 
+        r#"<script>console.log("Hello World! Im Working!");</script>"#
+    );
+    
     response.send(&stream)
 }
