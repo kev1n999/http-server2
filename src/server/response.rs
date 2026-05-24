@@ -11,11 +11,11 @@ use crate::types::{
 };
 
 impl Response {
-    pub fn send_bytes(&self, mut stream: &TcpStream) -> Result<(), std::io::Error> {
+    pub fn send(&self, mut stream: &TcpStream) -> Result<(), std::io::Error> {
         stream.write_all(&self.to_bytes())
     }
     pub fn to_bytes(&self) -> Vec<u8> {
-        let mut response: Vec<u8> = Vec::new();
+        let mut response: Vec<u8> = Vec::new(); // byte buffer 
         let response_line = format!("{} {} {}\r\n", self.version, self.status_code, self.reason);
         response.extend_from_slice(response_line.as_bytes());
 
@@ -28,7 +28,7 @@ impl Response {
         response.extend_from_slice(&self.body);
         response
     }
-    pub fn build_response(status_code: &StatusCode, content_type: ContentType, body: Vec<u8>) -> Self {
+    pub fn build_response(status_code: &StatusCode, content_type: ContentType, body: &str) -> Self {
         let headers = Self::headers_build(content_type, body.len()).expect("An error ocurred to build the headers!");
 
         Self {
@@ -36,7 +36,7 @@ impl Response {
             status_code: status_code.code(),
             reason: status_code.reason().to_string(),
             headers,
-            body,
+            body: body.as_bytes().to_vec(),
         }
     }
     pub fn headers_build(content_type: ContentType, body_len: usize) -> Result<HashMap<String, String>, String> {

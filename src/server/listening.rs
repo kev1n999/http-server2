@@ -1,4 +1,4 @@
-use crate::headers::request_parse::parse_request;
+use crate::{headers::request_parse::parse_request, server::responses::json::test_json};
 use crate::server::responses::html::hello_world;
 
 use std::{
@@ -18,5 +18,6 @@ pub fn handle_connection(mut stream: TcpStream) {
 
     let parsed = parse_request(http_request);
     println!("New request: {:#?}", parsed);
-    hello_world(&stream);
+    // hello_world(&stream);
+    test_json(&stream);
 }
