@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::types::method_type;
 
+// Http Request Structure to parse
 #[derive(Debug)]
 pub struct Request {
     pub version: String,

@@ -1,3 +1,4 @@
+// Available http methods
 #[derive(Debug)]
 pub enum Method {
     Get,

@@ -5,14 +5,15 @@ use crate::types::{
 
 use std::collections::HashMap;
 
+// function to parse a http request
 pub fn parse_request(lines: Vec<String>) -> Option<Request> {
-    let mut headers: HashMap<String, String> = HashMap::new();
-    let mut iter = lines.into_iter();  
-    let request_line = iter.next().unwrap();
-    let mut req_line_parts = request_line.split_whitespace(); // [METHOD, PATH, VERSION]
-    let method = req_line_parts.next().unwrap().to_string();
-    let path = req_line_parts.next().unwrap().to_string();
-    let version = req_line_parts.next().unwrap().to_string();
+    let mut headers: HashMap<String, String> = HashMap::new(); // hashmap to storage the parsed header 
+    let mut iter = lines.into_iter(); // convert the request lines to an iterator 
+    let request_line = iter.next().unwrap(); // get the request line(method path version)
+    let mut req_line_parts = request_line.split_whitespace(); // split request line -> [METHOD, PATH, VERSION]
+    let method = req_line_parts.next().unwrap().to_string(); // request method 
+    let path = req_line_parts.next().unwrap().to_string(); // request path 
+    let version = req_line_parts.next().unwrap().to_string(); // http version
 
     for header_lines in iter {
         match header_lines.split_once(':') {

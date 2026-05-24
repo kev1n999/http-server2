@@ -32,7 +32,7 @@ impl Response {
         let headers = Self::headers_build(content_type, body.len()).expect("An error ocurred to build the headers!");
 
         Self {
-            version: "HTTP/1.1".to_string(),
+            version: "HTTP/1.1".to_string(), 
             status_code: status_code.code(),
             reason: status_code.reason().to_string(),
             headers,
@@ -40,8 +40,8 @@ impl Response {
         }
     }
     pub fn headers_build(content_type: ContentType, body_len: usize) -> Result<HashMap<String, String>, String> {
-        let mut headers_hash: HashMap<String, String> = HashMap::new();
-        let content_type = ContentType::to_str(&content_type);
+        let mut headers_hash: HashMap<String, String> = HashMap::new(); // headers of server response
+        let content_type = ContentType::to_str(&content_type); // convert content-type to &str to send in the headers
 
         headers_hash.insert("Content-Type".to_string(), content_type.to_string());
         headers_hash.insert("Content-Length".to_string(),body_len.to_string());

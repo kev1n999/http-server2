@@ -1,6 +1,7 @@
 use crate::types::method_type::Method;
 
 impl Method {
+    // method to convert the string method of a request to the equivalent type
     pub fn new(method: String) -> Self {
         match method.trim().to_lowercase().as_str() {
             "get" => Method::Get,

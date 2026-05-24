@@ -1,3 +1,4 @@
+// available http content-types
 #[derive(Debug)]
 pub enum ContentType {
     Text,
@@ -7,7 +8,8 @@ pub enum ContentType {
 }
 
 impl ContentType {
-    pub fn from_str(content_type: &str) -> Option<Self> {
+    // convert &str content-type to equivalent enum variant
+    pub fn from_str(content_type: &str) -> Option<Self> { 
         match content_type.trim().to_lowercase().as_str() {
             "text/plain" => Some(ContentType::Text),
             "text/html" => Some(ContentType::Html),
@@ -16,6 +18,7 @@ impl ContentType {
             _ => None
         }
     }
+    // convert enum variant of content-type to &str 
     pub fn to_str(&self) -> &'static str {
         match self {
             ContentType::Text => "text/plain",

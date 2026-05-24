@@ -6,6 +6,8 @@ use std::{
     net::{TcpStream},
 };
 
+/// based on https://doc.rust-lang.org/book/ch21-01-single-threaded.html
+// function to handle http connections and get the requests
 pub fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);
     let http_request: Vec<_> = buf_reader

@@ -1,3 +1,4 @@
+// Http status codes to send in start/response line of a server response
 #[derive(Debug, Clone, Copy)]
 pub enum StatusCode {
     Ok,                  // 200
@@ -14,6 +15,7 @@ pub enum StatusCode {
 }
 
 impl StatusCode {
+    // convert a status code variant to equivalent code number
     pub fn code(&self) -> u16 {
         match self {
             StatusCode::Ok => 200,
@@ -29,7 +31,7 @@ impl StatusCode {
             StatusCode::BadGateway => 502,
         }
     }
-
+    // convert a status code to &str to be used in the reason of start/response line
     pub fn reason(&self) -> &'static str {
         match self {
             StatusCode::Ok => "OK",
