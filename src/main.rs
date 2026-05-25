@@ -1,6 +1,6 @@
 mod types;
 mod server;
-mod headers;
+mod parser;
 
 use crate::server::listening;
 
