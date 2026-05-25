@@ -5,3 +5,4 @@ pub mod content_type;
 pub mod status_code;
 pub mod route_type;
 pub mod handler_type;
+pub mod static_file;

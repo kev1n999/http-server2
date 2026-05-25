@@ -1,10 +1,11 @@
 // available http content-types
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub enum ContentType {
     Text,
     Html,
     Json,
     JavaScript,
+    Css,
 }
 
 impl ContentType {
@@ -15,6 +16,7 @@ impl ContentType {
             "text/html" => Some(ContentType::Html),
             "text/javascript" => Some(ContentType::JavaScript),
             "application/json" => Some(ContentType::Json),
+            "text/css" => Some(ContentType::Css),
             _ => None
         }
     }
@@ -25,6 +27,7 @@ impl ContentType {
             ContentType::Html => "text/html",
             ContentType::JavaScript => "text/javascript",
             ContentType::Json => "application/json",
+            ContentType::Css => "text/css",
         }
     }
 }
