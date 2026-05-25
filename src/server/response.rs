@@ -42,8 +42,9 @@ impl Response {
     pub fn headers_build(content_type: ContentType, body_len: usize) -> Result<HashMap<String, String>, String> {
         let mut headers_hash: HashMap<String, String> = HashMap::new(); // headers of server response
         let content_type = ContentType::to_str(&content_type); // convert content-type to &str to send in the headers
+        let charset = "charset=utf-8"; 
 
-        headers_hash.insert("Content-Type".to_string(), content_type.to_string());
+        headers_hash.insert("Content-Type".to_string(), format!("{}; {}", content_type, charset));
         headers_hash.insert("Content-Length".to_string(),body_len.to_string());
         Ok(headers_hash)
     }

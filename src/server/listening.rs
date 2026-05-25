@@ -11,7 +11,7 @@ use std::{
 
 /// based on https://doc.rust-lang.org/book/ch21-01-single-threaded.html
 // function to handle http connections and get the requests
-pub fn handle_connection(mut stream: TcpStream) {
+pub fn handle_connection(stream: TcpStream) {
     let buf_reader = BufReader::new(&stream);
     let http_request: Vec<String> = buf_reader
         .lines()
@@ -21,8 +21,16 @@ pub fn handle_connection(mut stream: TcpStream) {
 
     if let Some(request) = parse_request(http_request) {
         for route in routes() {
-            if request.method == Method::Get && request.path == "/".to_string() {
-                (route.handler)(&request, &stream);
+            if request.method == Method::Get && request.path == route.path {
+                if let Err(err) = (route.handler)(&request, &stream) {
+                    eprintln!("{err}");
+                }
+                break;
+            } else if request.method == Method::Get && request.path == route.path {
+                if let Err(err) = (route.handler)(&request, &stream) {
+                    eprintln!("{err}");
+                }
+                break;
             }
         }
     }

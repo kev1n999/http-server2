@@ -1,5 +1,4 @@
 use crate::types::{
-    response_type::Response,
     request_type::Request,
 };
 
