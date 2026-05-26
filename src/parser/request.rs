@@ -5,6 +5,31 @@ use crate::types::{
 
 use std::collections::HashMap;
 
+use std::fmt;
+
+impl fmt::Display for Request {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        writeln!(f, "\nVersion: {}", self.version)?;
+        writeln!(f, "Path: {}", self.path)?;
+        writeln!(f, "Method: {}", self.method)?;
+
+        writeln!(f, "Headers:")?;
+        
+        for (key, val) in &self.headers {
+            writeln!(f, "{}: {}", key, val)?;
+        }
+
+        writeln!(f, "Body:")?;
+
+        match std::str::from_utf8(&self.body) {
+            Ok(body) => writeln!(f, "{}", body)?,
+            Err(_) => writeln!(f, "{:?}", self.body)?,
+        }
+
+        Ok(())
+    }
+}
+
 // function to parse a http request
 pub fn parse_request(lines: Vec<String>) -> Option<Request> {
     let mut headers: HashMap<String, String> = HashMap::new(); // hashmap to storage the parsed header 
