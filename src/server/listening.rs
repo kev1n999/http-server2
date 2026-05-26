@@ -13,6 +13,7 @@ pub fn handle_connection(mut stream: TcpStream) {
     let parts_request: Vec<String> = str_request.split("\r\n\r\n").map(|s| s.to_string()).collect();
 
     if let Some(request) = parse_request(parts_request) {
+        println!("{:?}", request);
         request_handler(&stream, &request).unwrap();
     }
 }

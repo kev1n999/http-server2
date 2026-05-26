@@ -16,7 +16,7 @@ pub fn routes() -> Vec<Route> {
 
 pub fn static_files() -> Vec<StaticFile> {
     vec![
-        StaticFile::new("js/calc.js".to_string(), ContentType::JavaScript),
-        StaticFile::new("css/calc.css".to_string(), ContentType::Css),
+        StaticFile::new("/js/calc.js".to_string(), ContentType::JavaScript),
+        StaticFile::new("/css/calc.css".to_string(), ContentType::Css),
     ]
 }

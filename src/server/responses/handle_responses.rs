@@ -31,6 +31,7 @@ pub fn response_by_route(stream: &TcpStream, request: &Request) {
 pub fn response_by_file(stream: &TcpStream, request: &Request) {
     for file in static_files() {
         if request.path == file.path && request.method == Method::Get {
+            println!("true");
             file.send(stream).expect("An error ocurred to send the file!");
         }
     }
