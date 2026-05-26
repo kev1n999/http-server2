@@ -1,6 +1,6 @@
 use crate::types::content_type::{ContentType};
-use crate::parser::file_parse::parse_static_file;
-use crate::types::response_type::Response;
+use crate::parser::r#static::parse_static_file;
+use crate::types::response::Response;
 use crate::types::status_code::StatusCode;
 
 use std::net::TcpStream;

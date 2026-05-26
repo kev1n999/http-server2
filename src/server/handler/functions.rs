@@ -1,5 +1,5 @@
-use crate::{parser::{file_parse::parse_static_file, json_parse::parse_json}, types::{
-    content_type::ContentType, request_type::Request, response_type::Response, status_code::StatusCode
+use crate::{parser::{r#static::parse_static_file, json::parse_json}, types::{
+    content_type::ContentType, request::Request, response::Response, status_code::StatusCode
 }};
 
 use std::net::TcpStream;

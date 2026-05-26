@@ -1,8 +1,8 @@
 use crate::{
-    types::route_type::Route,
-    types::method_type::Method,
+    types::route::Route,
+    types::method::Method,
     types::content_type::ContentType,
-    types::static_file::StaticFile,
+    types::r#static::StaticFile,
     server::handler::functions::{home, calc, sum},
 };
 

@@ -1,5 +1,5 @@
 use crate::server::responses::response_404::response_404;
-use crate::types::request_type::Request;
+use crate::types::request::Request;
 use crate::server::responses::handle_responses::{request_is_file, response_by_file, response_by_route};
 
 use std::{

@@ -1,4 +1,4 @@
-pub mod request_parse;
-pub mod method_parse;
-pub mod json_parse;
-pub mod file_parse;
+pub mod request;
+pub mod method;
+pub mod json;
+pub mod r#static;

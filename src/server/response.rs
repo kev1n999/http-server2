@@ -5,7 +5,7 @@ use std::{
 };
 
 use crate::types::{
-    response_type::Response,
+    response::Response,
     content_type::ContentType,
     status_code::StatusCode,
 };

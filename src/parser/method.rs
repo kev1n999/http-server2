@@ -1,4 +1,4 @@
-use crate::types::method_type::Method;
+use crate::types::method::Method;
 
 impl Method {
     // method to convert the string method of a request to the equivalent type

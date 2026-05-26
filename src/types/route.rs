@@ -1,6 +1,6 @@
 use crate::types::{
-    method_type::Method,
-    handler_type::Handler,
+    method::Method,
+    handler::Handler,
 };
 
 #[derive(Debug)]
