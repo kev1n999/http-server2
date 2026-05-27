@@ -1,4 +1,7 @@
-use crate::{parser::request::parse_request, server::responses::handle_requests::request_handler};
+use crate::{
+    parser::request::parse_request,
+    server::responses::handler::{response::{response_handler}},
+};
 
 use std::{
     io::{Read},
@@ -14,6 +17,6 @@ pub fn handle_connection(mut stream: TcpStream) {
 
     if let Some(request) = parse_request(parts_request) {
         println!("New request: {}\n", request);
-        request_handler(&stream, &request).unwrap();
+        response_handler(&stream, &request).unwrap();
     }
 }
