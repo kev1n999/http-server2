@@ -1,4 +1,4 @@
-use crate::types::method::Method;
+use crate::types::headers::method::Method;
 
 use std::fmt;
 

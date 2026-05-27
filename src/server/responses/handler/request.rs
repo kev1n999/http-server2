@@ -1,4 +1,4 @@
-use crate::types::request::Request;
+use crate::types::client::request::Request;
 
 use std::path::Path;
 

@@ -1,10 +1,10 @@
 use crate::server::responses::default::response_404::response_404;
 use crate::server::responses::handler::request::request_is_file;
 use crate::server::routes::routes::{routes, static_files};
-use crate::types::request::Request;
+use crate::types::client::request::Request;
 
 use crate::types::{
-    method::Method,
+    headers::method::Method,
 };
 
 use std::net::TcpStream;

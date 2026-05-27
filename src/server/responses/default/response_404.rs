@@ -1,4 +1,7 @@
-use crate::{parser::r#static::parse_static_file, types::{content_type::ContentType, response::Response, status_code::StatusCode}};
+use crate::{parser::{r#static::parse_static_file}, types::{
+    server::{response::Response},
+    headers::{content_type::ContentType, status_code::StatusCode},
+}};
 
 use std::net::TcpStream;
 

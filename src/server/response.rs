@@ -5,9 +5,9 @@ use std::{
 };
 
 use crate::types::{
-    response::Response,
-    content_type::ContentType,
-    status_code::StatusCode,
+    server::response::Response,
+    headers::content_type::ContentType,
+    headers::status_code::StatusCode,
 };
 
 impl Response {

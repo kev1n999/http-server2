@@ -1,5 +1,5 @@
 use crate::types::{
-    request::Request,
+    client::request::Request,
 };
 
 use std::net::TcpStream;

@@ -1,6 +1,6 @@
 use crate::types::{
-    request::Request,
-    method::Method,
+    client::request::Request,
+    headers::method::Method,
 };
 
 use std::collections::HashMap;

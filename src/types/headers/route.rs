@@ -1,6 +1,6 @@
 use crate::types::{
-    method::Method,
-    handler::Handler,
+    headers::method::Method,
+    server::handler::Handler,
 };
 
 #[derive(Debug)]
