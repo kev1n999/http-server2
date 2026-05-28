@@ -17,7 +17,7 @@ impl StaticFile {
     }
     pub fn send(&self, stream: &TcpStream) -> Result<(), std::io::Error> {
         let content = parse_static_file(&self.path)?;
-        let response = Response::build_response(&StatusCode::Ok, self.content_type, &content);
+        let response = Response::new(&StatusCode::Ok, self.content_type, &content);
         response.send(stream)
     }
 }
