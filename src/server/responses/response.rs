@@ -1,8 +1,4 @@
 use std::collections::HashMap;
-use std::{
-    io::{Write},
-    net::{TcpStream},
-};
 
 use crate::types::{
     server::response::Response,
@@ -44,8 +40,5 @@ impl Response {
         headers_hash.insert("Content-Type".to_string(), format!("{}; {}", content_type, charset));
         headers_hash.insert("Content-Length".to_string(),body_len.to_string());
         Ok(headers_hash)
-    }
-    pub fn send(&self, mut stream: &TcpStream) -> Result<(), std::io::Error> {
-        stream.write_all(&self.to_bytes())
     }
 }

@@ -1,26 +1,23 @@
-use crate::{parser::{r#static::parse_static_file, json::parse_json}, types::{
-    server::{response::Response},
-    client::{request::Request},
-    headers::{content_type::ContentType, status_code::StatusCode},
+use crate::{parser::{json::parse_json, r#static::parse_static_file}, types::{
+    client::request::Request, headers::{content_type::ContentType, status_code::StatusCode}, server::{context::Context, response::Response}
 }};
 
-use std::net::TcpStream;
 use serde::Deserialize;
 
-pub fn home(request: &Request, stream: &TcpStream) -> Result<(), std::io::Error> {
+pub fn home(ctx: &mut Context) -> Result<(), std::io::Error> {
     let home_file = parse_static_file("home.html")?;
     let response = Response::new(&StatusCode::Ok, ContentType::Html, &home_file);
-    response.send(stream)
+    ctx.send(response)
 }
 
-pub fn calc(request: &Request, stream: &TcpStream) -> Result<(), std::io::Error> {
+pub fn calc(ctx: &mut Context) -> Result<(), std::io::Error> {
     let calc_file = parse_static_file("calc.html")?;
     let response = Response::new(&StatusCode::Ok, ContentType::Html, &calc_file);
-    response.send(stream)
+    ctx.send(response)
 }
 
-pub fn sum(request: &Request, stream: &TcpStream) -> Result<(), std::io::Error> {
-    let Request { body, .. } = request;
+pub fn sum(ctx: &mut Context) -> Result<(), std::io::Error> {
+    let Request { body, .. } = &ctx.request;
 
     #[derive(Deserialize)]
     struct Sum {
@@ -28,9 +25,9 @@ pub fn sum(request: &Request, stream: &TcpStream) -> Result<(), std::io::Error> 
         y: i32,
     }
     
-    let json: Sum = parse_json(body)?;
+    let json: Sum = parse_json(&body)?;
     let sum = json.x + json.y;
 
     let response = Response::new(&StatusCode::Ok, ContentType::Text, &format!("{}", sum));
-    response.send(stream)
+    ctx.send(response)
 }
