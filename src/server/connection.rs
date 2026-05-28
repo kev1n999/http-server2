@@ -1,6 +1,6 @@
 use crate::{
     parser::request::parse_request,
-    server::responses::handler::{response::{response_handler}},
+    server::responses::handler::response::response_handler, types::server::context::Context,
 };
 
 use std::{
@@ -9,7 +9,7 @@ use std::{
 };
 
 // function to handle http connections and get the requests
-pub fn handle_connection(mut stream: TcpStream) {
+pub fn handle_connection(stream: &mut TcpStream) {
     let mut buffer = [0u8; 4064];
     let req_bytes_received: usize = stream.read(&mut buffer).unwrap();
     let str_request = String::from_utf8_lossy(&buffer[..req_bytes_received]);
@@ -17,6 +17,7 @@ pub fn handle_connection(mut stream: TcpStream) {
 
     if let Some(request) = parse_request(parts_request) {
         println!("New request: {}\n", request);
-        response_handler(&stream, &request).unwrap();
+        let mut context = Context::new(request, stream);
+        response_handler(&mut context);
     }
 }

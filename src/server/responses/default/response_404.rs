@@ -1,11 +1,8 @@
-use crate::{parser::{r#static::parse_static_file}, types::{
-    server::{response::Response},
-    headers::{content_type::ContentType, status_code::StatusCode},
+use crate::{parser::r#static::parse_static_file, types::{
+    headers::{content_type::ContentType, status_code::StatusCode}, server::{context::Context, response::Response}
 }};
 
-use std::net::TcpStream;
-
-pub fn response_404(stream: &TcpStream) -> Result<(), std::io::Error> {
+pub fn response_404(ctx: &mut Context) -> Result<(), std::io::Error> {
     let content = parse_static_file("404.html")?;
     let response = Response::new(
         &StatusCode::NotFound,
@@ -13,5 +10,5 @@ pub fn response_404(stream: &TcpStream) -> Result<(), std::io::Error> {
         content.as_str(),
     );
 
-    response.send(stream)
+    ctx.send(response)
 }

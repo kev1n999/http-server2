@@ -1,7 +1,3 @@
-use crate::types::{
-    client::request::Request,
-};
+use crate::types::server::context::Context;
 
-use std::net::TcpStream;
-
-pub type Handler = fn(&Request, &TcpStream) -> Result<(), std::io::Error>;
+pub type Handler = fn(&mut Context) -> Result<(), std::io::Error>;
