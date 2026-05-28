@@ -11,8 +11,16 @@ use crate::types::{
 };
 
 impl Response {
-    pub fn send(&self, mut stream: &TcpStream) -> Result<(), std::io::Error> {
-        stream.write_all(&self.to_bytes())
+    pub fn new(status_code: &StatusCode, content_type: ContentType, body: &str) -> Self {
+        let headers = Self::headers_build(content_type, body.len()).expect("An error ocurred to build the headers!");
+
+        Self {
+            version: "HTTP/1.1".to_string(), 
+            status_code: status_code.code(),
+            reason: status_code.reason().to_string(),
+            headers,
+            body: body.as_bytes().to_vec(),
+        }
     }
     pub fn to_bytes(&self) -> Vec<u8> {
         let mut response: Vec<u8> = Vec::new(); // byte buffer 
@@ -28,17 +36,6 @@ impl Response {
         response.extend_from_slice(&self.body);
         response
     }
-    pub fn build_response(status_code: &StatusCode, content_type: ContentType, body: &str) -> Self {
-        let headers = Self::headers_build(content_type, body.len()).expect("An error ocurred to build the headers!");
-
-        Self {
-            version: "HTTP/1.1".to_string(), 
-            status_code: status_code.code(),
-            reason: status_code.reason().to_string(),
-            headers,
-            body: body.as_bytes().to_vec(),
-        }
-    }
     pub fn headers_build(content_type: ContentType, body_len: usize) -> Result<HashMap<String, String>, String> {
         let mut headers_hash: HashMap<String, String> = HashMap::new(); // headers of server response
         let content_type = ContentType::to_str(&content_type); // convert content-type to &str to send in the headers
@@ -47,5 +44,8 @@ impl Response {
         headers_hash.insert("Content-Type".to_string(), format!("{}; {}", content_type, charset));
         headers_hash.insert("Content-Length".to_string(),body_len.to_string());
         Ok(headers_hash)
+    }
+    pub fn send(&self, mut stream: &TcpStream) -> Result<(), std::io::Error> {
+        stream.write_all(&self.to_bytes())
     }
 }
