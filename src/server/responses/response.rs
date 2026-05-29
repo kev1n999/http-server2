@@ -7,7 +7,7 @@ use crate::types::{
 };
 
 impl Response {
-    pub fn new(status_code: &StatusCode, content_type: ContentType, body: &str) -> Self {
+    pub fn new(status_code: StatusCode, content_type: ContentType, body: &str) -> Self {
         let headers = Self::headers_build(content_type, body.len()).expect("An error ocurred to build the headers!");
 
         Self {

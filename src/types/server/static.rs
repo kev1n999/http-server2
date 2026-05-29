@@ -16,7 +16,7 @@ impl StaticFile {
     }
     pub fn send(&self, ctx: &mut Context) -> Result<(), std::io::Error> {
         let content = parse_static_file(&self.path)?;
-        let response = Response::new(&StatusCode::Ok, self.content_type, &content);
+        let response = Response::new(StatusCode::Ok, self.content_type, &content);
         ctx.send(response)
     }
 }
