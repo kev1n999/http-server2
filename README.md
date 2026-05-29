@@ -2,6 +2,46 @@
 
 A simple HTTP server written in Rust for learning and study purposes.
 
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/kev1n999/http-server2
+cd http-server2
+```
+
+### 2. Configure the Server Address
+
+Edit `src/main.rs` and set the desired host and port:
+
+```rust
+const HOST: &str = "127.0.0.1:8000";
+```
+
+The default address is `127.0.0.1:8000`.
+
+### 3. Build and Run the Server
+
+```bash
+cargo build
+cargo run
+```
+
+Or simply:
+
+```bash
+cargo run
+```
+
+### 4. Open the Server in Your Browser
+
+Navigate to:
+
+```text
+http://localhost:8000
+```
+
 ## Registering Routes
 
 Routes can be registered in `server/routes/routes.rs` by returning a `Vec<Route>`.
