@@ -32,6 +32,7 @@ impl fmt::Display for Request {
 
 // function to parse a http request
 pub fn parse_request(lines: Vec<String>) -> Option<Request> {
+    let mut reading_body = false;
     let mut headers: HashMap<String, String> = HashMap::new(); // hashmap to storage the parsed header 
     let mut body: Vec<String> = Vec::new(); // vec to storage the request body
 
@@ -43,17 +44,22 @@ pub fn parse_request(lines: Vec<String>) -> Option<Request> {
     let path = req_line_parts.next().unwrap().to_string(); // request path 
     let version = req_line_parts.next().unwrap().to_string(); // http version
 
-    for header_lines in iter.clone() {
-        match header_lines.split_once(':') {
-            Some((key, val)) => {
-                headers.insert(key.trim().to_string(), val.trim().to_string());
-            },
-            None => eprintln!("An error ocurred to parse the request header!"),
+    for header_lines in iter {
+        if header_lines.is_empty() {
+            reading_body = true;
+            continue;
         }
-    }
-    
-    for body_val in iter {
-        body.push(body_val)
+
+        if !reading_body {
+            match header_lines.split_once(':') {
+                Some((key, val)) => {
+                    headers.insert(key.trim().to_string(), val.trim().to_string());
+                },
+                None => eprintln!("An error ocurred to parse the request header!"),
+            }
+        } else {
+            body.push(header_lines);
+        }
     }
 
     Some(Request {
